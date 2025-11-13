@@ -9,7 +9,7 @@ def set_program_links():
 
 
     program_links = list()
-    for link in SmoothTQDM(direction_links, ncols=100, smooth_window=1000, desc="Получение ссылок на программы"):
+    for link in SmoothTQDM(direction_links, ncols=80, smooth_window=1000, desc="Получение ссылок на программы"):
         while True:
             try:
                 program_links += parser.get_educational_program_links_from_direction(link)
@@ -30,7 +30,7 @@ def set_institutes_information(start_index=0):
         with open(f'institutes_information/institutes_information{start_index}.json', 'r', encoding='utf-8') as f:
             institutes_information = json.load(f)
 
-    for index in SmoothTQDM(range(start_index, len(program_links)), ncols=100, smooth_window=1000, desc="Получение информации о программах"):
+    for index in SmoothTQDM(range(start_index, len(program_links)), ncols=80, smooth_window=1000, desc="Получение информации о программах"):
         link = program_links[index]
         if index%4000==0:
             with open(f'institutes_information/institutes_information{index}.json', 'w', encoding='utf-8') as f:
@@ -49,7 +49,7 @@ def set_data_base():
 
     with UniversityDB() as db:
         db.clear_database()
-        for item in SmoothTQDM(institutes_information, ncols=100, smooth_window=1000, desc="Запись в БД"):
+        for item in SmoothTQDM(institutes_information, ncols=80, smooth_window=1000, desc="Запись в БД"):
             db.insert_record(item)
 
 
